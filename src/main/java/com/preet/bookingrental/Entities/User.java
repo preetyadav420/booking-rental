@@ -23,6 +23,7 @@ public class User {
     private String username;
 
     @NotNull
+    @JsonIgnore
     private String password;
 
     @NotNull
