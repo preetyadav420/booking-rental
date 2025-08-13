@@ -1,8 +1,10 @@
 package com.preet.bookingrental.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +21,20 @@ public class User {
 
     @NotNull
     private String username;
+
     @NotNull
     private String password;
+
     @NotNull
     private String email;
 
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Listing> listings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Booking> bookings = new ArrayList<>();
 
     @NotNull
     @Enumerated(EnumType.STRING)

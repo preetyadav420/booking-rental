@@ -1,12 +1,16 @@
 package com.preet.bookingrental.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +28,10 @@ public class Listing {
     @JoinColumn(name = "vendor_id")
     @NotNull
     private User vendor;
+
+    @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Booking> bookings = new ArrayList<>();
 
     @NotNull
     private String title;
