@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,6 @@ public class User {
     private String username;
 
     @NotNull
-    @JsonIgnore
     private String password;
 
     @NotNull

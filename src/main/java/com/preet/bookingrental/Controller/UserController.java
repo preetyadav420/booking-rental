@@ -1,5 +1,6 @@
 package com.preet.bookingrental.Controller;
 
+import com.preet.bookingrental.Dtos.UserDto;
 import com.preet.bookingrental.Entities.User;
 import com.preet.bookingrental.Repositories.UserRepository;
 import jakarta.validation.Valid;
@@ -7,6 +8,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -25,10 +29,13 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<User>> getAll()
+    public ResponseEntity<Iterable<UserDto>> getAll()
     {
+        List<UserDto> users = new ArrayList<UserDto>();
 
-        Iterable<User> users = userRepository.findAll();
+        userRepository.findAll().forEach(user -> {
+            users.add( new UserDto(user.getId(),user.getUsername(),user.getEmail(),user.getRole()));
+        });
         return ResponseEntity.ok(users);
     }
 
