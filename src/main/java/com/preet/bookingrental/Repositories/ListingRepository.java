@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface ListingRepository extends CrudRepository<Listing, UUID> {
+
+    Iterable<Listing> findAllByVendor_Id(UUID id);
 }

@@ -2,7 +2,6 @@ package com.preet.bookingrental.Controller;
 
 
 import com.preet.bookingrental.Dtos.CreateListingDto;
-import com.preet.bookingrental.Dtos.ListingDto;
 import com.preet.bookingrental.Entities.Listing;
 import com.preet.bookingrental.Entities.User;
 import com.preet.bookingrental.Repositories.ListingRepository;
@@ -29,6 +28,22 @@ public class ListingController {
     public ResponseEntity<Iterable<Listing>> findAll() {
 
         Iterable<Listing> listings = listingRepository.findAll();
+        return ResponseEntity.ok(listings);
+
+    }
+    @GetMapping("/mylistings")
+    public ResponseEntity<?> findAllByVendor() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = auth.getPrincipal().toString();
+
+        User vendor = userRepository.findUserByUsername(username).orElse(null);
+        if(vendor == null)
+        {
+            return ResponseEntity.badRequest().body(Map.of("error","Vendor Not Found."));
+        }
+        Iterable<Listing> listings = listingRepository.findAllByVendor_Id(vendor.getId());
         return ResponseEntity.ok(listings);
 
     }
