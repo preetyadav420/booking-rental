@@ -73,7 +73,7 @@ public class ListingController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Listing> delete(@RequestParam UUID id) {
+    public ResponseEntity<Listing> delete(@PathVariable UUID id) {
         listingRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
